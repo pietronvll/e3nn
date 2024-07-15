@@ -1,18 +1,17 @@
 r"""Spherical Harmonics as polynomials of x, y, z
 """
-from typing import Union, List, Any
-
 import math
+from typing import Any, List, Union
 
 import sympy
-from sympy.printing.pycode import pycode
 import torch
+from sympy.printing.pycode import pycode
 
 from e3nn import o3
 from e3nn.util.jit import compile_mode
 
 
-@compile_mode("script")
+@compile_mode(None)
 class SphericalHarmonics(torch.nn.Module):
     """JITable module version of :meth:`e3nn.o3.spherical_harmonics`.
 
@@ -184,7 +183,7 @@ def spherical_harmonics(
     return sh(x)
 
 
-@torch.jit.script
+#@torch.jit.script
 def _spherical_harmonics(lmax: int, x: torch.Tensor, y: torch.Tensor, z: torch.Tensor) -> torch.Tensor:
     sh_0_0 = torch.ones_like(x)
     if lmax == 0:
